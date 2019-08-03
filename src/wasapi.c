@@ -1336,7 +1336,7 @@ static int outstream_do_open(struct SoundIoPrivate *si, struct SoundIoOutStreamP
     if (FAILED(hr = IAudioClient_GetStreamLatency(osw->audio_client, &max_latency_ref_time))) {
         return SoundIoErrorOpeningDevice;
     }
-    double max_latency_sec = from_reference_time(max_latency_ref_time);
+    double max_latency_sec = soundio_double_max(from_reference_time(max_latency_ref_time), dw->period_duration);
     osw->min_padding_frames = (max_latency_sec * outstream->sample_rate) + 0.5;
 
 
